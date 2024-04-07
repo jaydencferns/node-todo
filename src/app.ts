@@ -1,9 +1,10 @@
-import express, {Application, NextFunction, Request, Response} from "express";
+import express, {Application} from "express";
 import Todo from './models/todo'
 
 // import { getAllTodos } from "./controller/todo-controller";
 
 import * as todoController from './controller/todo-controller'
+import todoRouter from './router/todo-router'
 
 let todos: Todo [] =[
     {
@@ -15,24 +16,10 @@ let todos: Todo [] =[
 
 const app: Application = express();
 
-// app.use('/todo', (req: Request, res: Response, next: NextFunction) => {
-//     console.log('first middleware');
-//     next();
-// });
-
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//     console.log('first middleware');
-//     next();
-// });
-
 app.use(express.json());
 
-app.get("/todos",todoController.getAllTodos);
-
-app.post('/todo', todoController.addTodo);
-
-app.patch('/todo/:todoId', todoController.updateTodo);
-
-app.delete('/todo/:todoId', todoController.deleteTodo);
+app.use('/todo', todoRouter);
 
 app.listen(8000);
+
+// GET localhost:8000/todo/todos
